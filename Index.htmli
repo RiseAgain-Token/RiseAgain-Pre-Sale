@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RiseAgain Token Presale</title>
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f0f2d, #1b1b3a);
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #00ffd9;
+      font-size: 2.5rem;
+    }
+
+    h2 {
+      color: #00ff7b;
+    }
+
+    #countdown, #tokenCounter {
+      font-size: 1.2rem;
+      margin: 15px 0;
+    }
+
+    button {
+      background-color: #00ffd9;
+      border: none;
+      color: black;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      margin: 20px auto;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #00ff7b;
+    }
+
+    #ando-image {
+      width: 100%;
+      max-width: 500px;
+      margin: 30px auto;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,255,217,0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Rise Again with Ando</h1>
+  <h2>Presale Now Live!</h2>
+  <p>Connect your wallet and join the journey.<br>1 ETH = 1,000,000 RISE</p>
+
+  <!-- Countdown -->
+  <div id="countdown">⏳ Loading countdown...</div>
+
+  <!-- Buy Button -->
+  <button onclick="buyTokens()">Buy Now</button>
+
+  <!-- Live Token Counter -->
+  <div id="tokenCounter">🔥 0 / 2,000,000,000 RISE sold</div>
+
+  <!-- Wallet Connect -->
+  <button onclick="connectWallet()">Connect Wallet</button>
+
+  <!-- Ando Image -->
+  <img id="ando-image" src="https://ipfs.io/ipfs/QmQJJnZRWuC5XMS7L4yJQYfQxVn4Tf7xXHHjA6KoAVRdzS" alt="Ando - RiseAgain Character"/>
+
+  <script>
+    // --- Wallet Connect ---
+    let web3;
+    let userAccount = null;
+    const presaleAddress = "0xe8bbbf11e6f03e57d2ed2ce3482a40b21f4cc09b";
+
+    async function connectWallet() {
+      if (window.ethereum) {
+        try {
+          const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+          web3 = new Web3(window.ethereum);
+          userAccount = accounts[0];
+          alert('Wallet connected: ' + userAccount);
+        } catch (error) {
+          alert('Connection rejected');
+        }
+      } else {
+        alert('MetaMask not found. Please install it.');
+      }
+    }
+
+    // --- Simuliertes Buy-Event ---
+    let tokensSold = 0;
+    function buyTokens() {
+      if (!userAccount) {
+        alert("Please connect your wallet first.");
+        return;
+      }
+      tokensSold += Math.floor(Math.random() * 1000000 + 100000);
+      if (tokensSold > 2000000000) tokensSold = 2000000000;
+      document.getElementById("tokenCounter").innerText =
+        "🔥 " + tokensSold.toLocaleString() + " / 2,000,000,000 RISE sold";
+      alert("Simulierter Kauf ausgeführt (nur visuell)");
+    }
+
+    // --- Countdown ---
+    const endDate = new Date();
+    endDate.setDate(endDate.getDate() + 20); // 20 Tage ab heute
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = endDate.getTime() - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerText =
+        `⏳ ${days}d ${hours}h ${minutes}m ${seconds}s remaining`;
+
+      if (distance < 0) {
+        document.getElementById("countdown").innerText = "Presale Ended!";
+      }
+    }
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
