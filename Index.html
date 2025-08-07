@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RiseAgain Token Presale</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0d0f1a;
+      color: #ffffff;
+      text-align: center;
+    }
+    header {
+      padding: 20px;
+    }
+    h1 {
+      color: #00ffd1;
+      margin-bottom: 0;
+    }
+    h2 {
+      margin-top: 5px;
+      color: #00ff81;
+    }
+    .countdown {
+      font-size: 24px;
+      margin: 20px 0;
+    }
+    .buy-section {
+      margin: 30px;
+    }
+    button {
+      background: #00ffd1;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    img {
+      max-width: 300px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Rise Again with Ando</h1>
+    <h2>Presale Now Live!</h2>
+    <p>Connect your wallet and join the journey. 1 ETH = 1,000,000 RISE</p>
+  </header>
+
+  <div class="countdown" id="countdown">Loading presale timer...</div>
+
+  <div class="buy-section">
+    <button onclick="alert('Please connect your wallet on the presale site.')">Buy Now</button>
+  </div>
+
+  <img src="https://i.imgur.com/XY8RxpU.png" alt="Ando the Warrior"/>
+
+  <script>
+    const endTime = new Date();
+    endTime.setDate(endTime.getDate() + 20);
+    function updateCountdown() {
+      const now = new Date();
+      const distance = endTime - now;
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      document.getElementById("countdown").innerHTML =
+        `⏳ ${days}d ${hours}h ${minutes}m ${seconds}s remaining`;
+    }
+    setInterval(updateCountdown, 1000);
+  </script>
+
+</body>
+</html>
